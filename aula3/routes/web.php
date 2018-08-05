@@ -20,3 +20,9 @@ Route::get('atores/{id}', 'ActorsController@show');
 Route::get('todosOsAtores/', 'ActorsController@directory');
 
 Route::post('atores/procurar', 'ActorsController@search');
+
+Route::get('/filmes/procurarId/{id}', 'MoviesController@procurarFilmeId');
+
+Route::get('/filmes/procurarNome/{nome}', 'MoviesController@procurarFilmeNome');
+
+Route::get('/listarFilmes', 'MoviesController@listarFilmes');
