@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/form', function() {
-  return view('form');
-});
 
+Route::get('/form', 'MoviesController@formAdd');
 Route::post('/adicionar', 'MoviesController@adicionar');

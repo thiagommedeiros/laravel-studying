@@ -4,6 +4,7 @@
   <title>Adicionar Filme</title>
 </head>
 <body>
+
 @if (count($errors) > 0)
   <div class="col-6 m-auto">
     <div class="alert alert-danger">
@@ -13,7 +14,25 @@
     </div>
   </div>
 @endif
+
 <h1 align="center">Formulário</h1>
+
+@if (isset($salvo) && $salvo)
+  <div class="col-6 m-auto">
+    <div class="alert alert-success">
+      Filme adicionado com sucesso!
+    </div>
+  </div>
+@endif
+
+@if (isset($erroAoSalvar) && $erroAoSalvar)
+  <div class="col-6 m-auto">
+    <div class="alert alert-danger">
+      Ops, ocorreu um erro ao salvar os dados, tente novamente.
+    </div>
+  </div>
+@endif
+
 <form method="post" action="{{ url('/adicionar') }}">
   {{-- {{ csrf_field() }} --}}
   @csrf
@@ -35,24 +54,7 @@
     </div>
     <div class="form-group col-6 m-auto">
       <label>Data de estreia</label>
-        <select name="dia" class="form-control">
-          <option value="">Dia</option>
-            @for ($i=1; $i < 32; $i++)
-              <option value="2"><?php echo $i ?></option>
-            @endfor
-        </select>
-        <select name="mes" class="form-control">
-          <option value="">Mês</option>
-            @for ($i=0; $i < 13; $i++)
-              <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-            @endfor
-          </select>
-          <select name="ano" class="form-control">
-            <option value="">Ano</option>
-              @for ($i=2019; $i >= 1900; $i--)
-                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-              @endfor
-          </select>
+        <input type="date" name="release_date">
         </div>
       </div>
       <br>

@@ -8,28 +8,32 @@ use App\Movie;
 
 class MoviesController extends Controller
 {
-    public function adicionar(Request $request)
-    {
-      $this->validate($request, [
-        'title' => 'required',
-        'rating' => 'required',
-        'awards' => 'required',
-        'length' => 'required'
-      ]);
-      $movie = Movie::create([
-        'title' => $request->input('title'),
-        'rating' => $request->input('rating'),
-        'awards' => $request->input('awards'),
-        'length' => $request->input('length'),
-        'release_date' => '2000-01-01'
-      ]);
+  public function formAdd () {
+    return view('form');
+  }
 
-      $salvar = $movie->save();
+  public function adicionar(Request $request) {
+    $this->validate($request, [
+      'title' => 'required|max:100',
+      'rating' => 'required|numeric',
+      'awards' => 'required|numeric',
+      'length' => 'required|numeric'
+    ]);
 
-      if ($salvar) {
-        return 'Filme adicionado com sucesso!';
-      } else {
-        return view('form');
-      }
+    $movie = Movie::create([
+      'title' => $request->input('title'),
+      'rating' => $request->input('rating'),
+      'awards' => $request->input('awards'),
+      'length' => $request->input('length'),
+      'release_date' => $request->input('release_date')
+    ]);
+
+    $salvar = $movie->save();
+
+    if ($salvar) {
+      return view('form')->with('salvo', true);
+    } else {
+      return view('form')->with('erroAoSalvar', false);
     }
+  }
 }
