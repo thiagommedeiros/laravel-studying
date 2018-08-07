@@ -1,0 +1,37 @@
+PROBLEMA DE CONEXÃO DO MYSQL NO MACOSX
+======================================
+
+1. Primeiro vamos tentar rodar esse script para corrigir o problema do socket:
+
+	// Fonte: https://gist.github.com/robertsonf/fc0ed0b72631f69a24ced1e95ca1c335
+	// Fix the 2002 MySQL Socket error
+
+	sudo mkdir /var/mysql
+	sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock
+
+2. Se não der certo podemos criar um usuário "magapower" para acessar os bancos:
+
+	Acessar o prompt do MySql:
+
+		mysql -u root -p -h 127.0.0.1
+
+	No prompt do MySql:
+
+		CREATE USER 'megapower'@'localhost' IDENTIFIED BY '31866a0e0888d91a54fc974a345d2183';
+		GRANT ALL PRIVILEGES ON * . * TO 'megapower'@'localhost';
+		FLUSH PRIVILEGES;
+
+	Atualizar o arquivo .env com os novos dados de acesso do novo usuário.
+
+ 	Para garantir vamos remover essa config do cache:
+
+		mv bootstrap/cache/config.php bootstrap/cache/config.php.old
+
+	Em seguida precisamos reiniciar o mini servidor web:
+
+		php artisan serve
+
+3. Se nada disso funcionar vamos ter de instalar o MySql desta versão:
+
+	https://dev.mysql.com/downloads/file/?id=459872
+

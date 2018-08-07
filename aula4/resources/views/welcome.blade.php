@@ -49,7 +49,7 @@
                 font-size: 84px;
             }
 
-           a {
+            .links > a {
                 color: #636b6f;
                 padding: 0 25px;
                 font-size: 12px;
@@ -65,28 +65,31 @@
         </style>
     </head>
     <body>
-      <div class="content">
-        @if (Request::is('todosOsAtores'))
-          @foreach ($atores as $key => $value)
-            <a href="atores/{{$value['id']}}"> {{ $value["first_name"] . " " . $value["last_name"]}} </a>
-            <br>
-          @endforeach
-        @elseif (Request::is('atores/procurar'))
-          <div class="title">
-            {{ $ator }}
-          </div>
-        @endif
-        <br>
-        <form action="{{ url('atores/procurar') }}" method="post">
-          @csrf
-          <input type="text" name="nome" value="">
-          <input type="submit" name="" value="Enviar">
-        </form>
-        <br>
-        <form action="{{ url('todosOsAtores') }}" method="get">
-          <input type="submit" name="" value="Limpar">
-        </form>
-        <br>
-      </div>
+        <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('register') }}">Register</a>
+                    @endauth
+                </div>
+            @endif
+
+            <div class="content">
+                <div class="title m-b-md">
+                    Laravel
+                </div>
+
+                <div class="links">
+                    <a href="https://laravel.com/docs">Documentation</a>
+                    <a href="https://laracasts.com">Laracasts</a>
+                    <a href="https://laravel-news.com">News</a>
+                    <a href="https://forge.laravel.com">Forge</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
